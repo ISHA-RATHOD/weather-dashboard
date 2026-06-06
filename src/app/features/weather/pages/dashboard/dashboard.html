@@ -1,0 +1,87 @@
+<div class="min-h-screen bg-slate-900 text-white p-6">
+
+  <!-- Loading Bar -->
+
+  <div
+    *ngIf="loading"
+    class="fixed top-0 left-0 w-full h-1 bg-blue-500 animate-pulse">
+  </div>
+
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Search -->
+
+    <input
+      type="text"
+      placeholder="Search city..."
+      (keyup)="searchCity($event)"
+      class="w-full p-4 rounded text-black"
+    />
+
+    <!-- Error -->
+
+    <div
+      *ngIf="errorMessage"
+      class="bg-yellow-400 text-black p-4 rounded mt-4">
+
+      {{ errorMessage }}
+
+      <button
+        class="bg-black text-white px-4 py-2 rounded ml-3"
+        (click)="loadWeather(city)">
+
+        Retry
+
+      </button>
+
+    </div>
+
+    <!-- Weather Card -->
+
+    <div class="grid md:grid-cols-2 gap-6 mt-6">
+
+      <div class="bg-slate-800 p-6 rounded-xl">
+
+        <h2 class="text-3xl font-bold">
+          {{ weatherData?.name }}
+        </h2>
+
+        <p class="text-6xl mt-4">
+          {{ weatherData?.main?.temp }}°C
+        </p>
+
+        <p class="mt-4 text-xl capitalize">
+          {{ weatherData?.weather[0]?.description }}
+        </p>
+
+      </div>
+
+      <!-- Forecast -->
+
+      <div class="bg-slate-800 p-6 rounded-xl">
+
+        <h2 class="text-2xl font-bold mb-4">
+          Forecast
+        </h2>
+
+        <div
+  *ngFor="let item of $any(forecastData?.list) | slice:0:7"
+  class="flex justify-between border-b border-slate-600 py-2">
+
+  <span>
+    {{ $any(item).dt_txt }}
+  </span>
+
+  <span>
+    {{ $any(item).main.temp }}°C
+  </span>
+
+</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
